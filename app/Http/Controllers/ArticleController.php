@@ -29,7 +29,12 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $article = Article::create($request->all());
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $article = Article::create($validatedData);
         return response()->json($article, 201);
     }
 
@@ -54,8 +59,13 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
 
-        $article->updaet($request->all());
+
+        $article->updat($validatedData);
         return response()->json($article, 200);
     }
 
