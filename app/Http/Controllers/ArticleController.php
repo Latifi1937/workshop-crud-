@@ -8,11 +8,15 @@ use Illuminate\Http\Request;
 /**
  * @OA\Info(
  *      version="1.0.0",
- *      title="API Documentation",
+ *      title="API Gestion des Articles",
  *      description="Documentation de l'API pour la gestion des articles",
  *      @OA\Contact(
  *          email="support@example.com"
  *      )
+ * )
+ * @OA\Server(
+ *      url="http://127.0.0.1:8000",
+ *      description="Serveur local"
  * )
  */
 class ArticleController extends Controller
@@ -20,9 +24,9 @@ class ArticleController extends Controller
     /**
      * @OA\Get(
      *     path="/api/articles",
-     *     summary="Liste des articles",
+     *     summary="Récupérer la liste des articles",
      *     tags={"Articles"},
-     *     @OA\Response(response="200", description="Liste des articles")
+     *     @OA\Response(response="200", description="Liste des articles récupérée avec succès")
      * )
      */
     public function index()
@@ -34,9 +38,10 @@ class ArticleController extends Controller
     /**
      * @OA\Post(
      *     path="/api/articles",
-     *     summary="Créer un article",
+     *     summary="Créer un nouvel article",
      *     tags={"Articles"},
      *     @OA\RequestBody(
+     *         required=true,
      *         @OA\JsonContent(
      *             required={"title","description"},
      *             @OA\Property(property="title", type="string", example="Mon premier article"),
@@ -44,7 +49,7 @@ class ArticleController extends Controller
      *         )
      *     ),
      *     @OA\Response(response="201", description="Article créé avec succès"),
-     *     @OA\Response(response="422", description="Validation échouée")
+     *     @OA\Response(response="422", description="Erreur de validation")
      * )
      */
     public function store(Request $request)
@@ -92,6 +97,7 @@ class ArticleController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\RequestBody(
+     *         required=true,
      *         @OA\JsonContent(
      *             required={"title","description"},
      *             @OA\Property(property="title", type="string", example="Titre mis à jour"),
@@ -99,7 +105,7 @@ class ArticleController extends Controller
      *         )
      *     ),
      *     @OA\Response(response="200", description="Article mis à jour avec succès"),
-     *     @OA\Response(response="422", description="Validation échouée"),
+     *     @OA\Response(response="422", description="Erreur de validation"),
      *     @OA\Response(response="404", description="Article non trouvé")
      * )
      */
